@@ -1,8 +1,9 @@
-# Budget Tracker (C++17)
+# Personal Budget Tracker (C++17)
 
 ## 📋 Features
 - Add/delete transactions (date, description, amount)
-- Save/load to CSV using `std::filesystem`
+- Calculate net balance
+- Save/load to CSV
 - Monthly spending reports
 
 ## 📊 Architecture
