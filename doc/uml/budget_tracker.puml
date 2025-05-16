@@ -1,0 +1,12 @@
+@startuml BudgetTracker
+class BudgetTracker {
+  - transactions: std::vector<Transaction>
+  + add_transaction()
+  + save_to_csv()
+}
+class Transaction {
+  - date: std::chrono::year_month_day
+  - amount: double
+}
+BudgetTracker "1" *-- "0..*" Transaction
+@enduml
