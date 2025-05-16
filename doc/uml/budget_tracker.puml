@@ -1,12 +1,72 @@
-@startuml BudgetTracker
-class BudgetTracker {
+@startuml BudgetTrackerUML
+/'
+  BUDGET TRACKER UML
+  Version 1.0
+'/
+
+' ==== Classes ====
+class BudgetTracker{
+  /' Private member storing all transactions (encapsulated).'/
   - transactions: std::vector<Transaction>
-  + add_transaction()
-  + save_to_csv()
+
+  /' Save to csv '/
+  + add_transaction(date: Date, desc: string, amount: double): void
+  
+  /' Removes a transaction by index (returns success/fail). '/
+  + delete_transaction(index: size_t): bool
+  
+  /' Calculates total income - expenses. '/
+  + net_balance(): double
+
+  /' Saves transactions to a CSV file (uses std::filesystem). '/
+  + save_to_csv(path: fs::path): bool
+
+  /' Loads transactions from CSV (returns success/fail). '/
+  + load_from_csv(path: fs::path): bool
+
+  /' Generates a Report object for a specific month. '/
+  + get_monthly_report(year: int, month: int): Report
 }
+
 class Transaction {
-  - date: std::chrono::year_month_day
+  /'Private field for transaction date (could use std::chrono).'/
+  - date: Date
+
+  /'Description (e.g., "Rent", "Salary").'/
+  - description: string
+
+  /'Negative for expenses, positive for income.'/
   - amount: double
+
+  /'Serializes the transaction to a CSV string (e.g., "2024-05-20,Salary,3000").'/
+  + to_csv_line(): string
 }
-BudgetTracker "1" *-- "0..*" Transaction
+
+class Report {
+  /'Total income for the report period.'/
+  - income: double
+
+  /'Total expenses for the report period.'/
+  - expenses: double
+  
+  /'Filtered transactions for the period.'/
+  - transactions: vector<Transaction>
+  
+  /'Prints a formatted report (e.g., to console)'/
+  + print_summary(): void
+}
+
+' ==== Relationships ====
+BudgetTracker "1" *-- "0..*" Transaction : contains
+BudgetTracker "1" --> "1" Report : generates
+
+' ==== Enums ====
+enum DateFormat {
+  YYYY_MM_DD
+  DD_MM_YYYY
+}
+
+' ==== Notes ====
+note top of BudgetTracker: Uses std::filesystem for CSV persistence
+note right of Transaction: Negative amount = expense\nPositive amount = income
 @enduml

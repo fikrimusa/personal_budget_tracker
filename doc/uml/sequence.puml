@@ -1,0 +1,15 @@
+@startuml AddTransactionSequence
+
+actor User
+participant "CLI" as cli
+participant "BudgetTracker" as bt
+participant "Transaction" as txn
+
+User -> cli : Enter "add 2024-05-20 Salary 3000"
+cli -> bt : add_transaction(date, desc, amount)
+bt -> txn : new Transaction(date, desc, amount)
+bt -> bt : transactions.push_back(txn)
+bt --> cli : Success message
+cli --> User : "Transaction added!"
+
+@enduml

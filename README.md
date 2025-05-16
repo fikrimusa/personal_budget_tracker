@@ -1,4 +1,9 @@
-# personal_budget_tracker using C++17
+# Budget Tracker (C++17)
 
-## 📊 UML Diagram
-![Budget Tracker Class Diagram](doc/uml/BudgetTracker.png)
+![UML Class Diagram](doc/uml_images/budget_tracker.png)  
+*Generated from [docs/uml/budget_tracker.puml](doc/uml/budget_tracker.puml)*
+
+## 📋 Features
+- Add/delete transactions (date, description, amount)
+- Save/load to CSV using `std::filesystem`
+- Monthly spending reports
