@@ -7,7 +7,7 @@
 
 ## 📊 Architecture
 ### Class Diagram
-![Class Diagram](docs/uml_images/budget_tracker.png)
+![Class Diagram](doc/uml_images/budget_tracker.png)
 
 ### Example Workflow
-![Sequence Diagram](docs/uml_images/sequence.png)
+![Sequence Diagram](doc/uml_images/sequence.png)
