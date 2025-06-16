@@ -1,34 +1,25 @@
 #pragma once
+#include <iostream>
 #include <string>
 #include <ctime>
-#include <iostream>
+
+using namespace std;
 
 class Transaction {
 public:
-    Transaction(int year, int month, int day, std::string desc, double amount) {
-        date.tm_year = year - 1900;
-        date.tm_mon = month - 1;
-        date.tm_mday = day;
-        description = std::move(desc);
-        this->amount = amount;
-    }
+    Transaction(int y, int m, int d, string desc, double amt)
+        :  date_{0, 0, 0, d, m-1, y-1900}, 
+           description_{move(desc)},
+           amount_{amt}{}
 
-    // Add getter methods
-    std::tm getDate() const { return date; }
-    std::string getDescription() const { return description; }
-    double getAmount() const { return amount; }
-
-    // Add print method
-    void print() const {
-        std::cout << (date.tm_year + 1900) << "-" 
-                  << (date.tm_mon + 1) << "-"
-                  << date.tm_mday << " | "
-                  << description << " | $"
-                  << amount << "\n";
+    string to_csv() const {
+        char buf[11];
+        strftime(buf, sizeof(buf), "%Y-%m-%d", &date_);
+        return string(buf) + "," + description_ + "," + to_string(amount_);
     }
 
 private:
-    std::tm date{};
-    std::string description;
-    double amount;
+    tm date_;
+    string description_;
+    double amount_;
 };
