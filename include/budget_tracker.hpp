@@ -1,5 +1,7 @@
 #pragma once
 #include <vector>
+#include <fstream>
+#include <filesystem>
 #include "transaction.hpp"
 
 class BudgetTracker{
@@ -9,6 +11,13 @@ public:
     }
 
     size_t count() const{return transactions_.size(); }
+
+    bool save_to_csv(const std::filesystem::path& p) const {
+        std::ofstream f(p);
+        for (const auto& t : transactions_) f << t.to_csv() << "\n";
+        return f.good();
+    }
+
 
 private:
     std::vector<Transaction> transactions_;
